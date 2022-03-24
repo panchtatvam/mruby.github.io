@@ -8,7 +8,7 @@ description: >- # this means to ignore newlines until "markdown:"
   code in a C source file, see the "mrbtest" program under the "test" directory for an example.
 markdown: kramdown
 highlighter: rouge
-url: https://mruby.org
+url: https://mruby-org-jekyll-website.onrender.com/
 repository: https://github.com/mruby/mruby.github.io
 include: ['_index.html']
 plugins:
