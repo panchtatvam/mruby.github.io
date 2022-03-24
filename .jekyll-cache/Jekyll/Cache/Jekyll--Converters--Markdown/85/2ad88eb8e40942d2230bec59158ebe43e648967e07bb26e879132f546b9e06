@@ -1,0 +1,164 @@
+I")<h1 id="mruby-300">mruby 3.0.0</h1>
+
+<p>We are announcing the first stable release of mruby 3.0 series - <a href="https://github.com/mruby/mruby/releases/tag/3.0.0">mruby 3.0.0</a>.</p>
+
+<p>With mruby 3.0, the memory used of the mruby VM has been significantly reduced, and we have succeeded in significantly saving memory.
+Previous versions required several hundred KB of RAM, but mruby 3.0 can launch an application with about 100 KB of RAM.</p>
+
+<p>Describes the new features and changes in mruby 3.0.<br />
+The main changes in mruby 3.0 are also described in <a href="https://github.com/mruby/mruby/blob/master/doc/mruby3.md">doc/mruby3.md</a>.</p>
+
+<hr />
+
+<h1 id="new-features">New Features</h1>
+
+<h2 id="core-language-features">Core Language Features</h2>
+
+<ul>
+  <li>Implement endless-def. <a href="https://bugs.ruby-lang.org/issues/16746">Ruby:Feature#16746</a></li>
+  <li>Replace <code class="highlighter-rouge">R-assignment</code> by <code class="highlighter-rouge">single-line pattern matching</code>. <a href="https://bugs.ruby-lang.org/issues/15921">Ruby:Feature#15921</a></li>
+  <li>Support squiggly heredocs. <a href="https://github.com/mruby/mruby/pull/5246">#5246</a></li>
+</ul>
+
+<h2 id="features-for-mruby-developer">Features for mruby Developer</h2>
+
+<ul>
+  <li>Add new C APIs
+    <ul>
+      <li><code class="highlighter-rouge">mrbc_cleanup_local_variables()</code> - Clean up local variables on mrbc_context. <a href="https://github.com/mruby/mruby/pull/4931">#4931</a></li>
+      <li>Add functions that take symbols as arguments.
+        <ul>
+          <li><code class="highlighter-rouge">mrb_define_singleton_method_id()</code></li>
+          <li><code class="highlighter-rouge">mrb_define_class_method_id()</code></li>
+          <li><code class="highlighter-rouge">mrb_define_module_function_id()</code></li>
+          <li><code class="highlighter-rouge">mrb_undef_method_id()</code></li>
+          <li><code class="highlighter-rouge">mrb_undef_class_method_id()</code></li>
+          <li><code class="highlighter-rouge">mrb_define_const_id()</code></li>
+          <li><code class="highlighter-rouge">mrb_funcall_id()</code></li>
+        </ul>
+      </li>
+      <li>Add functions for symbol checking that return mrb_sym value.
+        <ul>
+          <li><code class="highlighter-rouge">mrb_intern_check()</code></li>
+          <li><code class="highlighter-rouge">mrb_intern_check_cstr()</code></li>
+          <li><code class="highlighter-rouge">mrb_intern_check_str()</code></li>
+        </ul>
+      </li>
+      <li><code class="highlighter-rouge">mrb_fiber_resume()</code> - Allow context switch from C module.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="update-features">Update Features</h1>
+
+<h2 id="reduce-memory-usage">Reduce memory usage</h2>
+
+<ul>
+  <li>Preallocate Symbols<br />
+The mruby 3.0 can now significantly reduce RAM usage by allocating symbols to static memory area at compile time. See <a href="https://github.com/mruby/mruby/blob/master/doc/guides/symbol.md">doc/guides/symbol.md</a> for more information.</li>
+  <li>Reduce memory usage of Hash objects. <a href="https://github.com/mruby/mruby/commit/f2d8db39">f2d8db39</a></li>
+  <li>Reduce memory usage when calling methods. <a href="https://github.com/mruby/mruby/pull/5272">#5272</a></li>
+</ul>
+
+<h2 id="updated-build-process">Updated build process</h2>
+
+<p>The old build configuration file <code class="highlighter-rouge">build_config.rb</code> has been reconfigured to a file in the <code class="highlighter-rouge">build_config</code> directory.<br />
+For example, the following typical build configuration is available.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">default</code>: the default configuration</li>
+  <li><code class="highlighter-rouge">host-gprof</code>: compiles with <code class="highlighter-rouge">gprof</code> for performance tuning</li>
+  <li><code class="highlighter-rouge">host-m32</code>: compiles in gcc 32bit mode on 64bit platforms</li>
+  <li><code class="highlighter-rouge">boxing</code>: compiles all three boxing options</li>
+  <li><code class="highlighter-rouge">clang-asan</code>: compiles with clang’s Address Sanitizer</li>
+</ul>
+
+<p>You can specify the mruby build configuration by building mruby with the <code class="highlighter-rouge">rake</code> build, specifying the build configuration file in the environment variable <code class="highlighter-rouge">MRUBY_CONFIG</code>.</p>
+
+<h2 id="core-libraries">Core Libraries</h2>
+
+<ul>
+  <li>Add new libraries.
+    <ul>
+      <li><code class="highlighter-rouge">mruby-catch</code> - Support <code class="highlighter-rouge">Kernel.#catch</code> and <code class="highlighter-rouge">Kernel.#throw</code>. <a href="https://github.com/mruby/mruby/commit/7eaaee54">7eaaee54</a></li>
+      <li><code class="highlighter-rouge">mruby-os-memsize</code> - Support <code class="highlighter-rouge">ObjectSpace.memsize_of</code> and <code class="highlighter-rouge">ObjectSpace.memsize_of_all</code>. <a href="https://github.com/mruby/mruby/pull/5032">#5032</a> <a href="https://github.com/mruby/mruby/pull/5040">#5040</a> <a href="https://github.com/mruby/mruby/pull/5041">#5041</a></li>
+    </ul>
+  </li>
+  <li>Add <code class="highlighter-rouge">Array.new([])</code> initialization. (mruby-array)</li>
+  <li>Add <code class="highlighter-rouge">Hash#except</code> (mruby-hash-ext)</li>
+  <li>Update <code class="highlighter-rouge">IO#popen</code> to use keyword arguments. (mruby-io)</li>
+  <li>Make <code class="highlighter-rouge">Module#include</code> and <code class="highlighter-rouge">Module#prepend</code> behave like Ruby 3.0. <a href="https://github.com/mruby/mruby/commit/3972df57">3972df57</a></li>
+</ul>
+
+<h2 id="tools">Tools</h2>
+
+<ul>
+  <li>Allow to mixed and specify <code class="highlighter-rouge">*.rb</code> and <code class="highlighter-rouge">*.mrb</code> in <code class="highlighter-rouge">mruby</code> interpreter. <a href="https://github.com/mruby/mruby/commit/a045b6b8">a045b6b8</a></li>
+  <li>Add <code class="highlighter-rouge">irep</code> C struct dump from <code class="highlighter-rouge">mrbc</code> with <code class="highlighter-rouge">-S</code> option.</li>
+</ul>
+
+<h2 id="features-for-mruby-developer-1">Features for mruby Developer</h2>
+
+<ul>
+  <li>Add new specifier <code class="highlighter-rouge">c</code> to <code class="highlighter-rouge">mrb_get_args()</code> for receive Class/Module.</li>
+</ul>
+
+<hr />
+
+<h1 id="breaking-changes">Breaking Changes</h1>
+
+<h2 id="mruby-vm-and-bytecode">mruby VM and bytecode</h2>
+
+<p>Due to improvements in the binary format, mruby binaries are no longer backward compatible.
+To run the mruby binaries on mruby 3.0, recompile with the mruby 3.0 <code class="highlighter-rouge">mrbc</code>.</p>
+
+<ul>
+  <li>Upgrade mruby VM version <code class="highlighter-rouge">RITE_VM_VER</code> to <code class="highlighter-rouge">0300</code> (means mruby 3.0).</li>
+  <li>Upgrade mruby binary version <code class="highlighter-rouge">RITE_BINARY_FORMAT_VER</code> to <code class="highlighter-rouge">0200</code>.</li>
+</ul>
+
+<h2 id="recognize-integer-system">Recognize Integer system</h2>
+
+<p><code class="highlighter-rouge">Integer</code> has been changed to a specification similar to CRuby.</p>
+
+<ul>
+  <li>Integrate <code class="highlighter-rouge">Fixnum</code> and <code class="highlighter-rouge">Integer</code>.</li>
+  <li>Remove <code class="highlighter-rouge">Integral</code>.</li>
+  <li><code class="highlighter-rouge">int / int -&gt; int</code></li>
+  <li>Add APIs for <code class="highlighter-rouge">Integer</code>.  APIs for <code class="highlighter-rouge">Fixnum</code> (<code class="highlighter-rouge">mrb_fixnum_xxx()</code>) is also left for compatibility.
+    <ul>
+      <li><code class="highlighter-rouge">mrb_fixnum()</code> -&gt; <code class="highlighter-rouge">mrb_integer()</code></li>
+      <li><code class="highlighter-rouge">mrb_fixnum_value()</code> -&gt; <code class="highlighter-rouge">mrb_int_value()</code></li>
+      <li><code class="highlighter-rouge">mrb_fixnum_p()</code> -&gt; <code class="highlighter-rouge">mrb_integer_p()</code></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="major-bug-fixes">Major bug fixes</h1>
+
+<ul>
+  <li>Fix take over file scope variables with <code class="highlighter-rouge">mruby</code> and <code class="highlighter-rouge">mirb</code> command. <a href="https://github.com/mruby/mruby/issues/4933">#4933</a></li>
+  <li>Fix performing <code class="highlighter-rouge">block_given?</code> from inside an orphan block always returns false. <a href="https://github.com/mruby/mruby/issues/5039">#5039</a></li>
+  <li>Fix segmentation fault in Mruby interpreter making it crash <a href="https://github.com/mruby/mruby/issues/5046">#5046</a></li>
+  <li>Fix splat operator to frozen Array raises FrozenError. <a href="https://github.com/mruby/mruby/issues/5067">#5067</a></li>
+  <li>Fix wrong behavior of File.extname when the filename starts or ends with a period. (mruby-io) <a href="https://github.com/mruby/mruby/issues/5077">#5077</a></li>
+  <li>Fix #parameters mistakes keyword “splat” for a block parameter. <a href="https://github.com/mruby/mruby/issues/5066">#5066</a></li>
+  <li>Fix mruby-io doesn’t work in processes started as Windows service. <a href="https://github.com/mruby/mruby/issues/5114">#5114</a></li>
+  <li>Fix resuming fiber from C seems to loop infinitely. <a href="https://github.com/mruby/mruby/issues/5261">#5261</a></li>
+  <li>Fix invalid UTF-8 string length. <a href="https://github.com/mruby/mruby/issues/5269">#5269</a></li>
+  <li>Fix avoid syntax error when EXPR_MID appears in conditional operator. <a href="https://github.com/mruby/mruby/issues/5290">#5290</a></li>
+  <li>Fix symbols like numbered parameters in blocks get a syntax error. <a href="https://github.com/mruby/mruby/issues/5295">#5295</a></li>
+  <li>Avoid infinite loops when converting objects to strings. <a href="https://github.com/mruby/mruby/commit/01a8d849">01a8d849</a></li>
+  <li>Fix module order of <code class="highlighter-rouge">#include</code>. <a href="https://bugs.ruby-lang.org/issues/7844">ruby-bug:7844</a></li>
+</ul>
+
+<hr />
+
+<p>We have done 983 commits to 274 files with 16,929 additions and 11,685 deletions since mruby 2.1.2. For more detail of the updates, <a href="https://github.com/mruby/mruby/compare/2.1.2...3.0.0">see Commit Log</a>.</p>
+
+<p>Thanks to all the contributors who have worked on bug fixes and improvements in the release of <code class="highlighter-rouge">mruby 3.0.0</code>.</p>
+:ET

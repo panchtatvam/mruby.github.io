@@ -1,0 +1,96 @@
+I"�<h1 id="mruby-130-released">mruby 1.3.0 released</h1>
+
+<p>mruby 1.3.0 is released. Download <a href="https://github.com/mruby/mruby/archive/1.3.0.zip">mruby 1.3.0</a> now.</p>
+
+<h2 id="mruby-130-by-the-numbers">mruby 1.3.0 by the numbers</h2>
+
+<ul>
+  <li>1,175 commits</li>
+  <li>248 issues fixed</li>
+  <li>262 pull requests merged</li>
+  <li>14 <a href="https://github.com/mruby/mruby/graphs/contributors">contributors</a></li>
+  <li>221 changed files</li>
+  <li>12,760 additions(+)</li>
+  <li>3,734 deletions(-)</li>
+</ul>
+
+<p><a href="https://github.com/mruby/mruby/compare/1.2.0...1.3.0">See the full diff</a>.</p>
+
+<h2 id="whats-new-in-mruby-130">What’s new in mruby 1.3.0</h2>
+
+<h3 id="the-safe-navigation-operator-">The safe navigation operator (<code class="highlighter-rouge">&amp;.</code>)</h3>
+
+<p>mruby 1.3 now supports the safe navigation operator (<code class="highlighter-rouge">&amp;.</code>) to help handle nil
+value returned from methods. This feature comes from Ruby 2.3.</p>
+
+<p>By using the safe navigation operator, you can simply write</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>account&amp;.owner&amp;.address
+</code></pre></div></div>
+
+<p>Instead of writing</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>account &amp;&amp; account.owner &amp;&amp; account.owner.address
+</code></pre></div></div>
+
+<p>Or (with ActiveSupport)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>account.try(:owner).try(:address)
+</code></pre></div></div>
+
+<h3 id="arraydig-hashdig"><code class="highlighter-rouge">Array#dig</code>, <code class="highlighter-rouge">Hash#dig</code></h3>
+
+<p><code class="highlighter-rouge">#dig</code> is a method to retrieve a value from JSON-like nested Array/Hash structures.</p>
+
+<p>This feature also comes from Ruby 2.3.</p>
+
+<p>For example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>params.dig(:account, :owner, :address)
+</code></pre></div></div>
+
+<p>Instead of</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>account = params[:account]
+owner = account[:owner]
+owner[:address]
+</code></pre></div></div>
+
+<h3 id="objectfreeze"><code class="highlighter-rouge">Object#freeze</code></h3>
+
+<p>You can now “freeze” an object by using Object#freeze.</p>
+
+<p>Frozen objects cannot be modified.</p>
+
+<h3 id="kernelcaller"><code class="highlighter-rouge">Kernel#caller</code></h3>
+
+<p>You can retrieve call frame information by using <code class="highlighter-rouge">Kernel#caller</code>.</p>
+
+<h2 id="remaining-bugs">Remaining Bugs</h2>
+
+<p>After the code-freeze of 1.3 release, following issues are filed and fixed in the master branch.</p>
+
+<ul>
+  <li><a href="https://github.com/mruby/mruby/issues/3711">#3711</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3712">#3712</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3714">#3714</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3715">#3715</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3716">#3716</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3717">#3717</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3719">#3719</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3720">#3720</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3721">#3721</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3722">#3722</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3723">#3723</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3724">#3724</a></li>
+</ul>
+
+<p>The following issues are not yet fixed as of 2017-07-04.</p>
+
+<ul>
+  <li><a href="https://github.com/mruby/mruby/issues/2720">#2720</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3629">#3629</a></li>
+  <li><a href="https://github.com/mruby/mruby/issues/3710">#3710</a></li>
+</ul>
+
+:ET

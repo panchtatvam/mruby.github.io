@@ -1,0 +1,296 @@
+I"<X<h1 id="mruby-210">mruby 2.1.0</h1>
+
+<p>We are proudly announcing the stable release of mruby 2.0 series - <a href="https://github.com/mruby/mruby/releases/tag/2.1.0">mruby 2.1.0</a>.<br />
+The <a href="https://github.com/mruby/mruby/releases/tag/2.1.0">mruby 2.1.0</a> has been enhanced with compatibility with Ruby 2 series, and some new features of Ruby 2.7 have been added.</p>
+
+<hr />
+
+<h1 id="new-features">New Features</h1>
+
+<h2 id="core-language-features">Core Language Features</h2>
+
+<ul>
+  <li>Suffix support (<code class="highlighter-rouge">Rational</code> and <code class="highlighter-rouge">Complex</code> literals) (#4125)</li>
+</ul>
+
+<h2 id="core-libraries">Core Libraries</h2>
+
+<h3 id="ruby-27-features">Ruby 2.7 features</h3>
+
+<ul>
+  <li>Add <code class="highlighter-rouge">Array#intersection</code> method which returns a new array containing elements common to both arrays. (mrbgems/mruby-array-ext)</li>
+  <li>Add <code class="highlighter-rouge">Enumerable#filter_map</code> method which is a short hand for <code class="highlighter-rouge">filter</code> + <code class="highlighter-rouge">map</code> in a single call. (mrbgems/mruby-enum-ext)</li>
+  <li>Add <code class="highlighter-rouge">Enumerable#tally</code> method which group and count elements of the collection. (mrbgems/mruby-enum-ext)</li>
+  <li>Add <code class="highlighter-rouge">Enumerator.produce</code> method which creates an infinite enumerator from any block. (mrbgems/mruby-enumerator)</li>
+  <li>Add <code class="highlighter-rouge">UnboundMethod#bind_call</code> method which call a method that overridden without allocation of intermediate Method object. (mruby-method)</li>
+  <li><code class="highlighter-rouge">Module#name</code>, <code class="highlighter-rouge">true#to_s</code>, <code class="highlighter-rouge">false#to_s</code> return a frozen string. The returned string is always the same object.</li>
+</ul>
+
+<h3 id="ruby-26-features">Ruby 2.6 features</h3>
+
+<ul>
+  <li>Add <code class="highlighter-rouge">Array#difference</code> method:<br />
+<code class="highlighter-rouge">Array#difference</code> returns a new array that is a copy of the original array, removing any items that also appear in other_ary. (mrbgems/mruby-array-ext)</li>
+</ul>
+
+<h3 id="new-libraries">New Libraries</h3>
+
+<ul>
+  <li>Add <code class="highlighter-rouge">mrbgems/mruby-rational</code>:<br />
+<code class="highlighter-rouge">Rational</code> class has been included into the core library, and rational numbers like <code class="highlighter-rouge">1/3</code> can be handled.</li>
+  <li>Add <code class="highlighter-rouge">mrbgems/mruby-complex</code>:<br />
+<code class="highlighter-rouge">Complex</code> class has been included into the core library to handle complex numbers.</li>
+</ul>
+
+<h3 id="new-c-apis">New C APIs</h3>
+
+<h4 id="macros-for-checking-object-type">Macros for checking object type</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mrb_false_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_true_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_free_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_object_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_class_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_module_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_iclass_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_sclass_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_proc_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_range_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_file_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_env_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_data_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_fiber_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_istruct_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">mrb_break_p</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="mruby-core-mrubyh">mruby core (mruby.h)</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MRB_API</span> <span class="n">mrb_int</span> <span class="nf">mrb_cmp</span><span class="p">(</span><span class="n">mrb_state</span> <span class="o">*</span><span class="n">mrb</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">obj1</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">obj2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="mruby-binary-mrubydumph-mrubyireph">mruby binary (mruby/dump.h, mruby/irep.h)</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MRB_API</span> <span class="n">mrb_irep</span> <span class="o">*</span><span class="nf">mrb_read_irep_buf</span><span class="p">(</span><span class="n">mrb_state</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">);</span>   <span class="c1">// mruby/dump.h</span>
+<span class="n">MRB_API</span> <span class="n">mrb_value</span> <span class="nf">mrb_load_irep_buf</span><span class="p">(</span><span class="n">mrb_state</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">);</span>   <span class="c1">// mruby/irep.h</span>
+<span class="n">MRB_API</span> <span class="n">mrb_value</span> <span class="nf">mrb_load_irep_buf_cxt</span><span class="p">(</span><span class="n">mrb_state</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">,</span> <span class="n">mrbc_context</span><span class="o">*</span><span class="p">);</span>   <span class="c1">// mruby/irep.h</span>
+</code></pre></div></div>
+
+<h4 id="numeric-class-mrubynumerich">Numeric class (mruby/numeric.h)</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MRB_API</span> <span class="n">mrb_value</span> <span class="nf">mrb_num_plus</span><span class="p">(</span><span class="n">mrb_state</span> <span class="o">*</span><span class="n">mrb</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">x</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">y</span><span class="p">);</span>
+<span class="n">MRB_API</span> <span class="n">mrb_value</span> <span class="nf">mrb_num_minus</span><span class="p">(</span><span class="n">mrb_state</span> <span class="o">*</span><span class="n">mrb</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">x</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">y</span><span class="p">);</span>
+<span class="n">MRB_API</span> <span class="n">mrb_value</span> <span class="nf">mrb_num_mul</span><span class="p">(</span><span class="n">mrb_state</span> <span class="o">*</span><span class="n">mrb</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">x</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">y</span><span class="p">);</span>
+<span class="n">MRB_API</span> <span class="n">mrb_value</span> <span class="nf">mrb_int_value</span><span class="p">(</span><span class="n">mrb_state</span> <span class="o">*</span><span class="n">mrb</span><span class="p">,</span> <span class="n">mrb_float</span> <span class="n">f</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="string-class-mrubystringh">String class (mruby/string.h)</h4>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MRB_API</span> <span class="kt">void</span> <span class="nf">mrb_str_modify_keep_ascii</span><span class="p">(</span><span class="n">mrb_state</span> <span class="o">*</span><span class="n">mrb</span><span class="p">,</span> <span class="k">struct</span> <span class="n">RString</span> <span class="o">*</span><span class="n">s</span><span class="p">);</span>
+<span class="n">MRB_API</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">mrb_string_cstr</span><span class="p">(</span><span class="n">mrb_state</span> <span class="o">*</span><span class="n">mrb</span><span class="p">,</span> <span class="n">mrb_value</span> <span class="n">str</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="mrubyvalueh">mruby/value.h</h4>
+
+<ul>
+  <li>Add customized <code class="highlighter-rouge">mrb_ro_data_p()</code> (#4408)</li>
+</ul>
+
+<h4 id="enumerable-module-and-hash-class">Enumerable module and Hash class</h4>
+
+<ul>
+  <li>Add <code class="highlighter-rouge">filter</code> aliases for <code class="highlighter-rouge">Enumerable</code> and <code class="highlighter-rouge">Hash</code>. (57a0132b)</li>
+</ul>
+
+<h2 id="configuration">Configuration</h2>
+
+<ul>
+  <li>(Proof of Concept) mruby tuning profiles (#4446)</li>
+</ul>
+
+<h2 id="mrbtest">mrbtest</h2>
+
+<h3 id="test-features">Test Features</h3>
+
+<ul>
+  <li>Warn if assertion is missing inside <code class="highlighter-rouge">assert</code> (#4320)</li>
+</ul>
+
+<h3 id="new-test-method-mrbtest">New test method (mrbtest)</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">assert_match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kp">nil</span><span class="p">)</span>
+<span class="n">assert_not_match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kp">nil</span><span class="p">)</span>
+<span class="n">assert_raise_with_message</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">exp_msg</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span>
+<span class="n">assert_raise_with_message_pattern</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">exp_msg</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+<span class="n">assert_not_nil</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="tools">Tools</h2>
+
+<h3 id="interactive-mruby-mirb">Interactive mruby (mirb)</h3>
+
+<ul>
+  <li>As with <code class="highlighter-rouge">irb</code> in Ruby, a local variable <code class="highlighter-rouge">_</code> is added to store the last result.</li>
+</ul>
+
+<hr />
+<h1 id="update-features">Update Features</h1>
+
+<h2 id="mruby-core">mruby core</h2>
+
+<ul>
+  <li>Allow newlines and comments between method calls. (4296c77e)</li>
+  <li>Support <code class="highlighter-rouge">&amp;.</code> at the beginning of the line (4124047c)</li>
+</ul>
+
+<h2 id="build-system">Build system</h2>
+
+<ul>
+  <li>Support lock file<br />
+It is now possible to fix mruby and mrbgems versions in products that use mruby.</li>
+  <li>Rename MRB_USE_ETEXT_EDATA to MRB_USE_LINK_TIME_RO_DATA_P and support lld linked programs (#4716)</li>
+</ul>
+
+<h2 id="c-apis">C APIs</h2>
+
+<h3 id="mruby-core-1">mruby core</h3>
+
+<ul>
+  <li>Keyword arguments can be obtained with <code class="highlighter-rouge">mrb_get_args</code> using the format string <code class="highlighter-rouge">:</code>.</li>
+  <li><code class="highlighter-rouge">mrb_parser_dump</code> supports displaying <code class="highlighter-rouge">NODE_DSYM</code>, <code class="highlighter-rouge">NODE_WORDS</code>, <code class="highlighter-rouge">NODE_SYMBOLS</code> and <code class="highlighter-rouge">NODE_LITERAL_DELIM</code>.</li>
+  <li>Raise <code class="highlighter-rouge">ArgumentError</code> by <code class="highlighter-rouge">aspec</code> check. (30f37872)</li>
+</ul>
+
+<h3 id="srcerrorc">src/error.c</h3>
+
+<ul>
+  <li>Add new specifiers/modifiers to format string of <code class="highlighter-rouge">mrb_vfromat()</code> (#4608)</li>
+</ul>
+
+<h2 id="mrbtest-1">mrbtest</h2>
+
+<ul>
+  <li>Nested <code class="highlighter-rouge">assert</code> for mrbtest (#4540)</li>
+</ul>
+
+<hr />
+<h1 id="compatibility">Compatibility</h1>
+
+<h2 id="mruby-core-2">mruby core</h2>
+
+<ul>
+  <li>Pad leading zero to month and day in <code class="highlighter-rouge">MRUBY_RELEASE_DATE</code> (#4353)</li>
+</ul>
+
+<h2 id="core-libraries-1">Core Libraries</h2>
+
+<ul>
+  <li>Add <code class="highlighter-rouge">Class#new(*args, &amp;block)</code> method.</li>
+  <li>Add optional argument to <code class="highlighter-rouge">Module#class_variables</code>.</li>
+  <li>Add constants for floating point number. (<code class="highlighter-rouge">RADIX</code>, <code class="highlighter-rouge">MANT_DIG</code>, <code class="highlighter-rouge">EPSILON</code>, <code class="highlighter-rouge">DIG</code>, <code class="highlighter-rouge">MIN_EXP</code>, <code class="highlighter-rouge">MIN</code>, <code class="highlighter-rouge">MIN_10_EXP</code>, <code class="highlighter-rouge">MAX_EXP</code>, <code class="highlighter-rouge">MAX</code>, <code class="highlighter-rouge">MAX_10_EXP</code>)</li>
+  <li>Removed <code class="highlighter-rouge">$1</code>..<code class="highlighter-rouge">$9</code> from <code class="highlighter-rouge">Kernel#global_variables</code>.</li>
+  <li>String#unpack/Array#pack does support base64 directive (<code class="highlighter-rouge">m</code>).</li>
+  <li>Add encoding argument to <code class="highlighter-rouge">Integral#chr</code> (#4593)</li>
+  <li>Fixed <code class="highlighter-rouge">length</code> for IO should be in bytes, not in characters (8c90b5fc)</li>
+</ul>
+
+<hr />
+<h1 id="breaking-changes">Breaking Changes</h1>
+
+<p>There are three major breaking changes from mruby 2.0.1.</p>
+
+<h2 id="changed-methods">Changed methods</h2>
+
+<ul>
+  <li>Move <code class="highlighter-rouge">Array#append</code> and <code class="highlighter-rouge">Array#prepend</code> from core to <code class="highlighter-rouge">mrbgems/mruby-ary-ext</code>.</li>
+  <li>Move <code class="highlighter-rouge">Numeric#div</code> from <code class="highlighter-rouge">mrbgems/mruby-numeric-ext</code> to the core.</li>
+  <li>Move <code class="highlighter-rouge">Integral#zero?</code>, <code class="highlighter-rouge">Integral#nonzero?</code>, <code class="highlighter-rouge">Integral#positive?</code> and <code class="highlighter-rouge">Integral#negative)?</code> to <code class="highlighter-rouge">Numeric</code> class.</li>
+  <li>Move <code class="highlighter-rouge">Numeric#__coerce_step_counter</code> to <code class="highlighter-rouge">Integral</code> class.</li>
+  <li>Move <code class="highlighter-rouge">Kernel#instance_exec</code>, <code class="highlighter-rouge">Kernel#equal?</code> and <code class="highlighter-rouge">Kernel#instance_eval</code> to <code class="highlighter-rouge">BasicObject</code> class.</li>
+  <li>Move <code class="highlighter-rouge">NilClass#to_h</code> to <code class="highlighter-rouge">mrbgems/mruby-object-ext</code> from <code class="highlighter-rouge">mrbgems/mruby-enum-ext</code></li>
+  <li>Move <code class="highlighter-rouge">String#getbyte</code>, <code class="highlighter-rouge">String#setbyte</code> and <code class="highlighter-rouge">String#byteslice</code> to the core. (#4696)</li>
+  <li>Remove <code class="highlighter-rouge">Kernel#global_variables</code> from core. This method is defined in <code class="highlighter-rouge">mrbgems/mruby-metaprog</code>.</li>
+  <li>Integrate <code class="highlighter-rouge">Integral#chr</code> (<code class="highlighter-rouge">Fixnum#chr</code>) to <code class="highlighter-rouge">mrbgems/mruby-string-ext</code>.</li>
+  <li>Remove <code class="highlighter-rouge">String#=~</code> and <code class="highlighter-rouge">String#match</code> that requires <code class="highlighter-rouge">Regexp</code> (fd37bc53)</li>
+  <li><code class="highlighter-rouge">Symbol#to_s</code> return a frozen string. The returned string is always the same object. This feature will be reverted next mruby, because which reverted from Ruby 2.7.</li>
+  <li>Explicit <code class="highlighter-rouge">.0</code> is removed from result of <code class="highlighter-rouge">Float#to_s</code> and <code class="highlighter-rouge">Float#inspect</code>. (9d08025b)</li>
+</ul>
+
+<h2 id="change-c-apis">Change C APIs</h2>
+
+<ul>
+  <li>Rename symbol-to-string functions. (#4684)
+    <ul>
+      <li><code class="highlighter-rouge">mrb_sym2name()</code> -&gt; <code class="highlighter-rouge">mrb_sym_name()</code></li>
+      <li><code class="highlighter-rouge">mrb_sym2name_len()</code> -&gt; <code class="highlighter-rouge">mrb_sym_name_len()</code></li>
+      <li><code class="highlighter-rouge">mrb_sym2str()</code> -&gt; <code class="highlighter-rouge">mrb_sym_str()</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="remove-c-apis">Remove C APIs</h2>
+
+<ul>
+  <li>Functions to remove <code class="highlighter-rouge">MRB_API</code> from definitions (referenced from within <code class="highlighter-rouge">libmruby</code>):<br />
+<code class="highlighter-rouge">mrb_instance_new()</code>, <code class="highlighter-rouge">mrb_vm_define_class()</code>, <code class="highlighter-rouge">mrb_vm_define_module()</code></li>
+  <li><code class="highlighter-rouge">struct RIstruct</code> is renamed to <code class="highlighter-rouge">struct RIStruct</code> (e41f1574)</li>
+  <li>Remove <code class="highlighter-rouge">mrb_fixnum_plus()</code>, <code class="highlighter-rouge">mrb_fixnum_minus()</code>, <code class="highlighter-rouge">mrb_fixnum_mul()</code>, and <code class="highlighter-rouge">mrb_num_div()</code>. Use <code class="highlighter-rouge">mrb_num_plus()</code>, <code class="highlighter-rouge">mrb_num_minus()</code>, <code class="highlighter-rouge">mrb_num_mul()</code> instead.</li>
+  <li>Remove a member <code class="highlighter-rouge">ary</code> of <code class="highlighter-rouge">struct RString</code>. <code class="highlighter-rouge">struct RStringEmbed</code> is used for String embedding. (#4646)</li>
+</ul>
+
+<h2 id="mruby-core-3">mruby core</h2>
+
+<ul>
+  <li>Remove global variable <code class="highlighter-rouge">$/</code>. The current Ruby policy do not encourage Perl-ish global variables.</li>
+  <li>Remove <code class="highlighter-rouge">MRB_TT_HAS_BASIC</code> macro. (#4728)</li>
+  <li>Remove members <code class="highlighter-rouge">flags</code> and <code class="highlighter-rouge">mems</code> of <code class="highlighter-rouge">struct mrb_state</code>. (0c5f26e0 and #4470)</li>
+</ul>
+
+<h2 id="configuration-1">Configuration</h2>
+
+<ul>
+  <li>Remove <code class="highlighter-rouge">MRB_METHOD_TABLE_INLINE</code> and <code class="highlighter-rouge">MRB_NO_INIT_ARRAY_START</code>. (2256bb07 and #4716)</li>
+  <li><code class="highlighter-rouge">MRB_USE_ETEXT_EDATA</code> is deprecated (warned and ignored). instead, use <code class="highlighter-rouge">MRB_USE_LINK_TIME_RO_DATA_P</code>. (#4716)</li>
+</ul>
+
+<h2 id="mruby-binary-mrb">mruby binary (MRB)</h2>
+
+<ul>
+  <li>Remove “LINE” section reader. (#4455)</li>
+</ul>
+
+<hr />
+<h1 id="major-bug-fixes">Major bug fixes</h1>
+
+<ul>
+  <li><code class="highlighter-rouge">SystemStackError</code> is raised from <code class="highlighter-rouge">String#=~</code>. (#4363)</li>
+  <li>Null pointer dereference in ecall. (#4370)</li>
+  <li>mismatched shift functions. (#4380)</li>
+  <li>Compilation error with “MRB_ARY_EMBED_LEN_MAX” in “array.h”. (#4382)</li>
+  <li>Fixed a bug in recursive <code class="highlighter-rouge">mrb_top_run</code> calls; fix (#4384)</li>
+  <li>Unexpected error: <code class="highlighter-rouge">Can't get cfunc env from non-cfunc proc.</code> (#4389)</li>
+  <li>build error on master by MRB_WITHOUT_FLOAT. (#4478)</li>
+  <li>Null pointer dereference in mrb_str_cat_str. (#4504)</li>
+  <li>Some comments do not increment lineno on context. (#4513)</li>
+  <li>Null pointer dereference in mrb_check_frozen. (#4519)</li>
+  <li>Invalid read in mrb_class. (#4534)</li>
+  <li>Array#inspect recurses too much for self-referential arrays. (#4552)</li>
+  <li>Infinite loop in Integer#step when both args are INFINITY. (#4555)</li>
+  <li>Float#round hangs for large ndigits. (#4566)</li>
+  <li>Cannot call <code class="highlighter-rouge">Fiber.yield</code> in method. (#4567)</li>
+  <li>Reference to top-level variable in top-level block is broken. (#4581)</li>
+  <li>Bugs with mutually recursive Array and Hash. (#4582)</li>
+  <li><code class="highlighter-rouge">mrb_gc_unregister()</code> may access freed memory. (#4618)</li>
+  <li>memcpy-param-overlap in str_replace_partial. (#4627)</li>
+  <li>Symbol#inspect does not handle Unicode characters. (#4678)</li>
+  <li>mrb_funcall returns odd value. (#4696)</li>
+  <li>behavior of alias is different from CRuby. (#4718)</li>
+  <li>compile error at master by clang 9. (#4786)</li>
+</ul>
+
+<hr />
+
+<p>We have done 912 commits to 229 files, 12,006 lines were added, 5,382 lines removed since mruby 2.0.1. For more detail of the updates, <a href="https://github.com/mruby/mruby/compare/2.0.1...stable">see Commit Log</a>.</p>
+
+<p>Let’s try <code class="highlighter-rouge">mruby 2.1.0</code>.</p>
+:ET
