@@ -1,4 +1,3 @@
 _site
-mruby
-/.bundle/
-/vendor/
+.jekyll-cache
+.jekyll-metadata
