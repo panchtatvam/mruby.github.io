@@ -1,0 +1,61 @@
+/**
+*
+* Supplementary code for Foundation CSS
+* @author Akash Kumar Sharma <vyom@vyom.site>
+*
+*/
+
+.site-header {
+  border-bottom: 1px solid $primary-color;
+  box-shadow: 0px 1px 1px $primary-color;
+}
+
+.site-logo-img {
+  height: 60px;
+  width: auto;
+}
+
+.site-primary-nav, .site-primary-nav-mobile {
+  ul {
+    li {
+      a {
+        font-weight: bolder;
+        color: gray;
+      }
+    }
+  }
+}
+
+.color-black {
+  color: black !important;
+  border-bottom: 2px solid black;
+}
+
+.page {
+  min-height: 80vh !important;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bolder;
+  }
+}
+
+a {
+  text-decoration: underline;
+}
+
+.docs-page {
+  code {
+    border: none;
+    background-color: #ffffff !important;
+    color: $primary-color;
+  }
+}
+
+.site-footer {
+  background-color: black;
+  color: white;
+}
