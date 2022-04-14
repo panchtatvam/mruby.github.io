@@ -1,26 +1,75 @@
-<header class="site-header">
+<header class="site-header padding-bottom-1">
+  {% comment %}
+  Site primary navigation. This is visible only for non-mobile devices
+  {% endcomment %}
+  <nav class="site-primary-nav grid-container margin-top-1 show-for-large">
+    <div class="grid-x">
+      <div class="cell small-4">
+        <ul class="menu margin-top-1">
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">Topics</a>
+          </li>
+          <li>
+            <a href="#">Download</a>
+          </li>
+        </ul>
+      </div>
+      <div class="cell small-4 padding-left-2">
+        <img class="site-logo-img" src="{{ site.url }}{{ '/assets/images/site-logo.png' | relative_url }}"
+          alt="{{ site.title }}">
+      </div>
+      <div class="cell small-4">
+        <ul class="menu margin-top-1">
+          <li>
+            <a href="#" class="color-black">Documentation</a>
+          </li>
+          <li>
+            <a href="#">Libraries</a>
+          </li>
+          <li>
+            <a href="#">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <nav class="hide-for-large site-primary-nav-mobile">
     <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
-        <button class="menu-icon" type="button" data-toggle="example-menu"></button>
-        <div class="title-bar-title">Menu</div>
+      <button class="menu-icon margin-right-1" type="button" data-toggle="example-menu"></button>
+      <img class="site-logo-img" src="{{ site.url }}{{ '/assets/images/site-logo.png' | relative_url }}"
+          alt="{{ site.title }}">
+    </div>
+
+    <div class="top-bar" id="example-menu">
+      <div class="top-bar-left">
+        <ul class="dropdown menu vertical text-center" data-dropdown-menu>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">Topics</a>
+          </li>
+          <li>
+            <a href="#">Downloads</a>
+          </li>
+          <li>
+            <a href="#">Documentation</a>
+          </li>
+          <li>
+            <a href="#">Libraries</a>
+          </li>
+          <li>
+            <a href="#">Get Started</a>
+          </li>
+        </ul>
       </div>
-      
-      <div class="top-bar" id="example-menu">
-        <div class="top-bar-left">
-          <ul class="dropdown menu" data-dropdown-menu>
-            <li class="menu-text">mRuby</li>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Topics</a></li>
-            <li><a href="#">Download</a></li>
-            <li><a href="#">Documentation</a></li>
-            <li><a href="#">Libraries</a></li>
-            <li><a href="#">Get Started</a></li>
-          </ul>
-        </div>
-        <div class="top-bar-right">
-          <ul class="menu">
-            <li><input type="search" placeholder="Search"></li>
-            <li><button type="button" class="button">Search</button></li>
-          </ul>
-        </div>
-      </div>
+    </div>
+  </nav>
+
+
 </header>
