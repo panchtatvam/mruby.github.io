@@ -1,0 +1,27 @@
+---
+layout: default
+---
+
+<section class="grid-container margin-top-3 margin-bottom-3 libraries-page page">
+    {{ content }}
+
+    <table class="hover margin-top-3">
+        <thead>
+          <tr>
+            <th class="">Name</th>
+            <th>Description</th>
+            <th>Author</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for mgem in site.data.mgems %}
+                <tr>
+                    <td><a href="{{ mgem.website }}" target="_blank">{{ mgem.name}}</a></td>
+                    <td>{{ mgem.description }}</td>
+                    <td>{{ mgem.author }}</td>
+                </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+</section>
